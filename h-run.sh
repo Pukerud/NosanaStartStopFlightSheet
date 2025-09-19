@@ -30,7 +30,7 @@ echo "--- h-run.sh: Starting miner process... ---"
 # Create a wrapper script to handle the download and execution
 cat << 'EOF' > /tmp/nosana_wrapper.sh
 #!/bin/bash
-wget -qO- https://nosana.com/start.sh | bash
+wget -qO- https://nosana.com/start.sh | sed 's/--interactive -t/-i/' | bash
 EOF
 chmod +x /tmp/nosana_wrapper.sh
 
