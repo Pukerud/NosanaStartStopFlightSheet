@@ -15,6 +15,7 @@ cleanup() {
   echo "$(date '+%Y-%m-%d %H:%M:%S') - h-run.sh received stop signal. Stopping Nosana..." >> "$LOG_FILE"
   # The Nosana process is a child of this script and should receive the signal as well.
   # We just need to exit gracefully.
+  rm -f /tmp/nosana_wrapper.sh
   echo "--- h-run.sh: Exiting now. ---"
   exit 0
 }
@@ -25,8 +26,16 @@ trap 'cleanup' SIGTERM SIGHUP SIGINT SIGQUIT EXIT
 
 # --- Main Execution ---
 echo "--- h-run.sh: Starting miner process... ---"
+
+# Create a wrapper script to handle the download and execution
+cat << 'EOF' > /tmp/nosana_wrapper.sh
+#!/bin/bash
+wget -qO- https://nosana.com/start.sh | bash
+EOF
+chmod +x /tmp/nosana_wrapper.sh
+
 echo "$(date '+%Y-%m-%d %H:%M:%S') - h-run.sh starting Nosana..." >> "$LOG_FILE"
-sg docker -c "bash <(wget -qO- https://nosana.com/start.sh)" &
+sg docker -c /tmp/nosana_wrapper.sh &
 
 # --- Keep Script Alive ---
 # This loop is required to keep the script running so HiveOS doesn't think it crashed.
