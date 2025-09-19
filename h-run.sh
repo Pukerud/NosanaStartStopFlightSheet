@@ -26,7 +26,7 @@ trap 'cleanup' SIGTERM SIGHUP SIGINT SIGQUIT EXIT
 # --- Main Execution ---
 echo "--- h-run.sh: Starting miner process... ---"
 echo "$(date '+%Y-%m-%d %H:%M:%S') - h-run.sh starting Nosana..." >> "$LOG_FILE"
-bash <(wget -qO- https://nosana.com/start.sh) &
+sg docker -c "bash <(wget -qO- https://nosana.com/start.sh)" &
 
 # --- Keep Script Alive ---
 # This loop is required to keep the script running so HiveOS doesn't think it crashed.
