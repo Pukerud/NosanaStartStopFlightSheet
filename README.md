@@ -16,7 +16,13 @@ These scripts provide a simple way to integrate a Nosana node with HiveOS, allow
 ## Installation and Usage
 
 1.  **Create a .tar.gz package:**
-    -   `tar -czvf NosanaSheet.tar.gz h-manifest.conf h-config.sh h-run.sh h-stats.sh README.md`
+    The tarball must contain a directory named `NosanaSheet` containing the miner files.
+    ```bash
+    mkdir -p NosanaSheet
+    cp h-manifest.conf h-config.sh h-run.sh h-stats.sh README.md NosanaSheet/
+    tar -czvf NosanaSheet.tar.gz NosanaSheet/
+    rm -rf NosanaSheet
+    ```
 2.  **Upload the package:**
     -   Upload the `NosanaSheet.tar.gz` file to a web server or a service like GitHub releases. You will need a public URL to the file.
 3.  **Configure the HiveOS Flight Sheet:**
