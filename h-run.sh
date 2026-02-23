@@ -33,6 +33,9 @@ cat << 'EOF' > /tmp/nosana_wrapper.sh
 #!/bin/bash
 export HOME=/root
 
+# Enable verbose logging for debugging
+set -x
+
 # Download start.sh
 if wget -qO /tmp/nosana_start.sh https://nosana.com/start.sh; then
   # Remove TTY allocation from docker exec command
@@ -50,7 +53,9 @@ EOF
 chmod +x /tmp/nosana_wrapper.sh
 
 echo "$(date '+%Y-%m-%d %H:%M:%S') - h-run.sh starting Nosana..." >> "$LOG_FILE"
-sg docker -c /tmp/nosana_wrapper.sh &
+
+# Run the wrapper script in the background and redirect output to log file
+sg docker -c /tmp/nosana_wrapper.sh >> "$LOG_FILE" 2>&1 &
 
 # --- Keep Script Alive ---
 # This loop is required to keep the script running so HiveOS doesn't think it crashed.
