@@ -16,6 +16,7 @@ cleanup() {
   # The Nosana process is a child of this script and should receive the signal as well.
   # We just need to exit gracefully.
   rm -f /tmp/nosana_wrapper.sh
+  rm -f /tmp/nosana_start.sh
   echo "--- h-run.sh: Exiting now. ---"
   exit 0
 }
@@ -31,7 +32,20 @@ echo "--- h-run.sh: Starting miner process... ---"
 cat << 'EOF' > /tmp/nosana_wrapper.sh
 #!/bin/bash
 export HOME=/root
-wget -qO- https://nosana.com/start.sh | sed 's/--interactive -t/-i/' | bash
+
+# Download start.sh
+if wget -qO /tmp/nosana_start.sh https://nosana.com/start.sh; then
+  # Remove TTY allocation from docker exec command
+  sed -i 's/docker exec -it/docker exec -i/g' /tmp/nosana_start.sh
+  # Remove TTY allocation from DOCKER_ARGS
+  sed -i 's/--interactive -t/--interactive/g' /tmp/nosana_start.sh
+
+  # Run the patched script
+  bash /tmp/nosana_start.sh
+else
+  echo "Failed to download start.sh"
+  exit 1
+fi
 EOF
 chmod +x /tmp/nosana_wrapper.sh
 
