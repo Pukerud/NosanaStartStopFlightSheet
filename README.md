@@ -16,45 +16,48 @@ These scripts provide a simple way to integrate a Nosana node with HiveOS, allow
 ## Installation and Usage
 
 1.  **Create a .tar.gz package:**
-    The tarball must contain a directory named `NosanaSheet` containing the miner files.
+    The tarball must contain a directory named `NosanaFlight` containing the miner files.
+    **Important:** If you change the directory name (e.g., to `v7NosanaFlight`), you must also update the `CUSTOM_NAME` in `h-manifest.conf` to match it.
 
     **Linux / macOS / WSL:**
     ```bash
-    mkdir -p NosanaSheet
-    cp h-manifest.conf h-config.sh h-run.sh h-stats.sh README.md NosanaSheet/
-    tar -czvf NosanaSheet.tar.gz NosanaSheet/
-    rm -rf NosanaSheet
+    mkdir -p NosanaFlight
+    cp h-manifest.conf h-config.sh h-run.sh h-stats.sh README.md NosanaFlight/
+    tar -czvf NosanaFlight.tar.gz NosanaFlight/
+    rm -rf NosanaFlight
     ```
 
     **Windows (Command Prompt):**
     ```cmd
-    mkdir NosanaSheet
-    copy h-manifest.conf NosanaSheet\
-    copy h-config.sh NosanaSheet\
-    copy h-run.sh NosanaSheet\
-    copy h-stats.sh NosanaSheet\
-    copy README.md NosanaSheet\
-    tar -czvf NosanaSheet.tar.gz NosanaSheet
-    rmdir /s /q NosanaSheet
+    mkdir NosanaFlight
+    copy h-manifest.conf NosanaFlight\
+    copy h-config.sh NosanaFlight\
+    copy h-run.sh NosanaFlight\
+    copy h-stats.sh NosanaFlight\
+    copy README.md NosanaFlight\
+    tar -czvf NosanaFlight.tar.gz NosanaFlight
+    rmdir /s /q NosanaFlight
     ```
 
     **Windows (PowerShell):**
     ```powershell
-    New-Item -ItemType Directory -Force -Path NosanaSheet
-    Copy-Item h-manifest.conf, h-config.sh, h-run.sh, h-stats.sh, README.md -Destination NosanaSheet
-    tar -czvf NosanaSheet.tar.gz NosanaSheet
-    Remove-Item -Recurse -Force NosanaSheet
+    New-Item -ItemType Directory -Force -Path NosanaFlight
+    Copy-Item h-manifest.conf, h-config.sh, h-run.sh, h-stats.sh, README.md -Destination NosanaFlight
+    tar -czvf NosanaFlight.tar.gz NosanaFlight
+    Remove-Item -Recurse -Force NosanaFlight
     ```
 
 2.  **Upload the package:**
-    -   Upload the `NosanaSheet.tar.gz` file to a web server or a service like GitHub releases. You will need a public URL to the file.
+    -   Upload the `NosanaFlight.tar.gz` file to a web server or a service like GitHub releases. You will need a public URL to the file.
+    -   **Tip:** When releasing a new version, change the filename (e.g., `NosanaFlight-v1.tar.gz`, `NosanaFlight-v2.tar.gz`) to ensure HiveOS downloads the new version instead of using a cached one.
+
 3.  **Configure the HiveOS Flight Sheet:**
     -   In HiveOS, create a new Flight Sheet.
     -   For the miner, select "Custom".
     -   Click "Setup Miner Config".
     -   A new window will appear. Fill in the following fields:
-        -   **Miner name:** `NosanaSheet`
-        -   **Installation URL:** The public URL to your `NosanaSheet.tar.gz` file.
+        -   **Miner name:** `NosanaFlight` (Must match the directory name inside the tarball)
+        -   **Installation URL:** The public URL to your `.tar.gz` file.
     -   Apply changes, save the flight sheet, and launch it.
 
 ## Troubleshooting
