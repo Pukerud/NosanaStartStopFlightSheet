@@ -16,36 +16,11 @@ These scripts provide a simple way to integrate a Nosana node with HiveOS, allow
 ## Installation and Usage
 
 1.  **Create a .tar.gz package:**
-    The tarball must contain a directory named `NosanaFlight` containing the miner files.
-    **Important:** If you change the directory name (e.g., to `v7NosanaFlight`), you must also update the `CUSTOM_NAME` in `h-manifest.conf` to match it.
-
-    **Linux / macOS / WSL:**
-    ```bash
-    mkdir -p NosanaFlight
-    cp h-manifest.conf h-config.sh h-run.sh h-stats.sh README.md NosanaFlight/
-    tar -czvf NosanaFlight.tar.gz NosanaFlight/
-    rm -rf NosanaFlight
-    ```
-
-    **Windows (Command Prompt):**
-    ```cmd
-    mkdir NosanaFlight
-    copy h-manifest.conf NosanaFlight\
-    copy h-config.sh NosanaFlight\
-    copy h-run.sh NosanaFlight\
-    copy h-stats.sh NosanaFlight\
-    copy README.md NosanaFlight\
-    tar -czvf NosanaFlight.tar.gz NosanaFlight
-    rmdir /s /q NosanaFlight
-    ```
-
-    **Windows (PowerShell):**
-    ```powershell
-    New-Item -ItemType Directory -Force -Path NosanaFlight
-    Copy-Item h-manifest.conf, h-config.sh, h-run.sh, h-stats.sh, README.md -Destination NosanaFlight
-    tar -czvf NosanaFlight.tar.gz NosanaFlight
-    Remove-Item -Recurse -Force NosanaFlight
-    ```
+    
+  if you manually make the miner remember to chmod all the files
+  "cd /hive/miners/custom" and make a tar file : "tar -czvf NosanaFlight.tar.gz NosanaFlight/"
+  run this to upload: 
+  "scp user@YOUR_RIG_IP:/hive/miners/custom/NosanaFlight.tar.gz %USERPROFILE%\Desktop\"
 
 2.  **Upload the package:**
     -   Upload the `NosanaFlight.tar.gz` file to a web server or a service like GitHub releases. You will need a public URL to the file.
